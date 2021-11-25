@@ -20,7 +20,7 @@ parser.add_argument('--port', type=int, help='port of database server (optional,
 
 args = parser.parse_args()
 
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; DBRepairTool) +https://misskey-exp.cyberrex.jp/'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; MisskeyDBRepairTool)'
 
 print(f'Connecting to {args.username}@{args.host}:{args.port}...')
 db = psycopg2.connect(database=args.database, user=args.username, password=args.password, host=args.host, port=args.port or 5432)
