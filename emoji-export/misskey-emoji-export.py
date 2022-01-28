@@ -10,8 +10,6 @@ import argparse
 import datetime
 import os
 
-import mysql.connector as msql
-
 print('Misskey Emoji Export Tool v1.0')
 print('(C)2022 CyberRex\n')
 
