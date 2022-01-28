@@ -17,6 +17,7 @@ parser.add_argument('-u', '--username', help='username to login database', requi
 parser.add_argument('-p', '--password', help='password to login database', required=True)
 parser.add_argument('-d', '--database', help='name of database', required=True)
 parser.add_argument('--port', type=int, help='port of database server (optional, Default: 5432)', default=5432, required=False)
+parser.add_argument('-a' , '--acct', help='Account name (single mode)', required=False)
 
 args = parser.parse_args()
 
@@ -28,7 +29,14 @@ db.commit()
 print('\n')
 
 with db.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-    cur.execute('SELECT * FROM "public"."user" WHERE "host" IS NOT NULL')
+    if args.acct:
+         u = args.acct.split('@', 1)
+         if len(u)!=2:
+            print('Bad acct')
+            exit()
+         cur.execute('SELECT * FROM "public"."user" WHERE "host" = %s AND "username" = %s', (u[1], u[0]))
+    else:
+         cur.execute('SELECT * FROM "public"."user" WHERE "host" IS NOT NULL')
     r = [dict(x) for x in cur.fetchall()]
 
 for user in r:
